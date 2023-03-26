@@ -18,9 +18,10 @@
                 <li> <a href=https://github.com/arabusov/druzi-prog>GitHub</a></li>
                 <li> <p>
                     <a href=https://play.google.com/store/apps/details?id=com.termux>Termux</a>
-                &mdash; это эмулятор командной строки для телефонов на базе
-                Android без необходимости дополнительных настроек или
-                доступа к суперпользователю на телефоне.
+                    &mdash; это эмулятор командной строки для телефонов на базе
+                    Android без необходимости дополнительных настроек или
+                    доступа к суперпользователю на телефоне. На новых Android не
+                    работает.
                     </p>
                 </li>
                 <li> <p> <a href=https://www.putty.org/>PuTTY</a>
@@ -30,10 +31,37 @@
                     <a href=https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.78-installer.msi>ссылке</a>.
                     </p>
                 </li>
+                <li>
+                    <p>
+                    <a href=https://www.qemu.org>QEMU</a> &mdash; это
+                    программа, которая эмулирует компьютер вниутри
+                    компьютера. QEMU может эмулировать разные типы
+                    компьютеров: так, например, если у вас нет компьютера с
+                    Linux, но хочется поэкспериментировать и есть компьютер
+                    с Windows, то QEMU подходит как нельзя кстати для таких
+                    опытов. Скачать QEMU для Windows можно по
+                    <a href=https://qemu.weilnetz.de/w64/qemu-w64-setup-20221230.exe>ссылке</a>.
+                    </p>
+
+                    <p>Готовый образ Slackware Linux 15.0 для QEMU можно
+                    скачать по
+                    <a href=qemu/sl15.img>ссылке</a> (внимание, размер файла
+                    15 гигабайт!) Для запуска на своей системе я использую
+                    следующую команду для запуска образа и эмуляции сети
+                    внутри виртуального компьютера:
+<pre>
+qemu-system-x86_64 \
+    -hdd sl15.img\
+    -accel kvm \
+    -netdev user,id=n1 -device virtio-net-pci,netdev=n1 \
+    -m 4G
+</pre>
+                    Однако в Windows команда должна выглядеть по-другому.
+                </li>
             </ul>
             Проекты:
             <ul>
-                <li> <p>
+                <li><p>
                     <a href=http://www.t3x.org/subc/>Компилятор subc</a>
                 </li></p>
                 <li> <p>

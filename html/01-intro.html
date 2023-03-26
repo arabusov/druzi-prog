@@ -33,6 +33,164 @@
 как работают компьютеры внутри, и что на самом деле делают программы.
 
 </p>
+
+<h3 id="лабораторные-работы">Практическое занятие</h3>
+<section id="подготовка" class="frame">
+<h3>Подготовка</h3>
+<p><code>PuTTY</code> (Windows), <code>Termux</code> (Android)</p>
+<p>Wifi:</p>
+<ul>
+<li><p>Имя сети: <code>pdp11</code></p></li>
+<li><p>Пароль: имена двух создателей UNIX и их менеджера без пробелов
+строчными буквами</p></li>
+</ul>
+<p>Проверка соединения: <code>ping 192.168.1.1</code></p>
+<p>Конфигурация терминала:</p>
+<ul>
+<li><p>Тип соединения: Telnet</p></li>
+<li><p>IP: <code>192.168.1.1</code></p></li>
+<li><p>Порт: <code>5555</code></p></li>
+</ul>
+</section>
+<section id="успешное-соединение" class="frame">
+<h3>Успешное соединение</h3>
+<pre><code>C:\&gt; telnet 192.168.1.1 5555
+Trying 192.168.1.1...
+Connected to 192.168.1.1.
+Escape character is &#39;^]&#39;.
+
+
+Connected to the PDP-11 simulator DCI device, line 0
+
+
+login: </code></pre>
+</section>
+<section id="использование-терминала" class="frame">
+<h3>Использование терминала</h3>
+<p>В UNIX терминальный ввод-вывод двусторонний: всё, что вы печатаете,
+отправляется систему, и в нормальном режиме отправляется обратно на
+экран терминала (<code>echo</code> режим).</p>
+<p>За редким исключением: пароли</p>
+<p>Введённые символы анализируются системой только при нажатии клавиши
+<code>RETURN</code> (на большинстве клавиатур: <code>Enter</code>)</p>
+<p>Другие специальные сигналы, которые терминал посылает ОС, кодируются
+с помощью одновременного нажатия на клавишу <code>CONTROL</code>
+(<code>Ctrl</code> на большинстве клавиатур); так,
+<code>^</code><code>M</code> эмулирует <code>RETURN</code>,
+<code>^</code> означает <code>CONTROL</code></p>
+</section>
+<section id="комбинации-с-control" class="frame">
+<h3>Комбинации с <code>CONTROL</code></h3>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>^</code><code>M</code></td>
+<td style="text-align: left;"><code>RETURN</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>^</code><code>D</code></td>
+<td style="text-align: left;">Конец ввода</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>^</code><code>G</code></td>
+<td style="text-align: left;">Динь</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>^</code><code>H</code></td>
+<td style="text-align: left;"><code>Backspace</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>^</code><code>I</code></td>
+<td style="text-align: left;"><code>TAB</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>^</code><code>C</code></td>
+<td style="text-align: left;">Прерывание</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>^</code><code>S</code></td>
+<td style="text-align: left;">Остановить вывод</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>^</code><code>Q</code></td>
+<td style="text-align: left;">Восстановить вывод</td>
+</tr>
+</tbody>
+</table>
+<p>По умолчанию <code>DELETE</code> функционирует как
+<code>^</code><code>C</code> на V7</p>
+<p><code>DELETE</code> — это <code>Backspace</code> или <span
+class="math inline">←</span></p>
+</section>
+<section id="командная-строка" class="frame">
+<h3>Командная строка</h3>
+<p>Приветствие командной строки: <code>$</code></p>
+<p>Команда не будет запущена до тех пор, пока клавиша
+<code>RETURN</code> (или <code>^</code><code>M</code>) не будет
+нажата</p>
+<p>UNIX различает прописные и строчные буквы: <code>abcde</code>
+отличается от <code>ABCDE</code></p>
+<p>Вариант простой команды: <code>date</code> — показать дату и
+время</p>
+<p>Справка о командах: <code>man</code>. Например:
+<code>man man</code></p>
+<p>(V7 думает, что печатает вам на печатную машинку, ловите вывод с
+помощью <code>^</code><code>S</code>)</p>
+<p>По умолчанию чтобы удалить введённый символ надо написать
+<code>#</code></p>
+<p>По умолчанию чтобы удалить введённую строку надо написать
+<code>@</code></p>
+<p>&lt;&lt;Нормальная&gt;&gt; настройка:</p>
+<pre><code>stty erase &quot;^h&quot; kill &quot;^u&quot; nl0 cr0</code></pre>
+</section>
+<section id="файловая-система" class="frame">
+<h3>Файловая система</h3>
+</section>
+<section id="файловая-система-1" class="frame">
+<h3>Файловая система</h3>
+<pre><code>$ ls -ltr /
+total 343
+-rw-rw-r-- 1 root       34 Dec 31  1969 .profile
+-rwxrwxr-x 1 root    54122 Dec 31  1969 munix
+drwxr-xr-x 2 root      448 Dec 31  1969 dev
+drwxr-xr-x16 bin       304 Dec 31  1969 usr
+-rwxrwxr-x 1 root    54826 Dec 31  1969 munix2
+drwxrwxr-x 2 bin       336 Jan 22  1979 lib
+drwxrwxr-x 2 bin      2480 May  5  1979 bin
+-rwxrwxr-x 1 bin      6900 May 16  1979 boot
+-rwxrwxr-x 1 sys     52850 Jun  8  1979 unix
+drwxrwxrwx 2 bin       304 Oct 23 16:31 tmp
+drwxr-xr-x 2 root      336 Oct 23 16:32 etc</code></pre>
+</section>
+<section id="файловая-система-2" class="frame">
+<h3>Файловая система</h3>
+<pre><code>$ od -c /.
+0000000 002  \0   .  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000020 002  \0   .   .  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000040   f  \0   u   s   r  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000060   e  \0   b   i   n  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000100 226  \0   e   t   c  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000120   &quot; 001   .   p   r   o   f   i   l   e  \0  \0  \0  \0  \0  \0
+0000140 205  \0   l   i   b  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000160   q  \0   d   e   v  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000200     001   m   u   n   i   x  \0  \0  \0  \0  \0  \0  \0  \0  \0
+0000220  \r 001   m   u   n   i   x   2  \0  \0  \0  \0  \0  \0  \0  \0
+...
+0000440</code></pre>
+</section>
+<section id="текстовый-редактор" class="frame">
+<h3>Текстовый редактор</h3>
+<pre><code>$ ed
+a
+some jusk
+even more junk
+more and more
+.
+w junk
+39
+q
+$</code></pre>
+</section>
 <a href=index.html>Главная страница</a>
 </div> 
  </body>

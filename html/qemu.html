@@ -22,32 +22,100 @@
             <!-- https://www.behance.net/gallery/85873319/Computer-Error-animation/modules/497068075 -->
         </div>
         <div class="content">
-            <h2>Запуск QEMU и Slackware Linux 15.0</h2>
+            <h2>Установка и настройка QEMU</h2>
+            <p>
+            Хорошее описание того как настроить QEMU вы можете найти
+            <a href=https://linuxhint.com/qemu-windows/>здесь</a>. Следуйте
+            инструкциям до настроек переменных среды (environment variables)
+            включительно. Для того чтобы протестировать работу QEMU,
+            откройте Windows Power Shell (from the Start menu, click Start,
+            click All Programs, click Accessories, click the Windows
+            PowerShell folder, and then click Windows PowerShell), и в нём
+            выполните команду
+            </p>
+<pre>
+qemu-system-x86_64
+</pre>
+            <p>
+            Должно появиться окно с виртуальной машиной. QEMU покажет
+            примерно вот такие вот сообщения на экране (версия BIOS будет
+            скорее всего другой):
+            </p>
+<pre>
+SeaBIOS (version Arch Linux 1.16.2-1-1)
+
+
+iPXE (http://ipxe.org) 00:03.0 C900 PCI2.10 PnP PMM+06FD33C0+06F333C0 C900
+
+
+
+Booting from Hard Disk...
+Boot failed: could not read the boot disk
+
+Booting from Floppy...
+Boot failed: could not read the boot disk
+
+Booting from DVD/CD...
+Boot failed: Could not read from CDROM (code 0003)
+Booting from ROM...
+iPXE (PCI 00:03.0) starting execution...ok
+iPXE initialising devices...ok
+
+
+
+iPXE 1.20.1+ (g4bd0) -- Open Source Network Boot Firmware -- http://ipxe.org
+Features: DNS HTTP iSCSI TFTP AoE ELF MBOOT PXE bzImage Menu PXEXT
+
+net0: 52:54:00:12:34:56 using 82540em on 0000:00:03.0 (open)
+  [Link:up, TX:0 TXE:0 RX:0 RXE:0]
+Configuring (net0 52:54:00:12:34:56)...... ok
+net0: 10.0.2.15/255.255.255.0 gw 10.0.2.2
+Nothing to boot: No such file or directory (http://ipxe.org/2d03e13b)
+No more network devices
+
+No bootable device.
+
+</pre>
+            <h2>Запуск Slackware Linux 15.0 в QEMU</h2>
             <p>Готовый образ Slackware Linux 15.0 для QEMU можно
             скачать по
             <a href=qemu/sl15.img>ссылке</a> (внимание, размер файла
-            15 гигабайт!) Для запуска на своей системе я использую
+            15 гигабайт!) Важно запомнить, в какую папку вы скачали этот
+            файл.
+            Для запуска 
             следующую команду для запуска образа и эмуляции сети
             внутри виртуального компьютера:
+            </p>
             <pre>
-qemu-system-x86_64 \
-    -hdd sl15.img\
-    -accel kvm \
-    -netdev user,id=n1 -device virtio-net-pci,netdev=n1 \
-    -m 4G
+qemu-system-x86_64 -hdd ПУТЬ_ДО_ОБРАЗА\sl15.img -m 4G
             </pre>
-            Однако в Windows команда должна выглядеть по-другому.
-            </p>
-
             <p>
-            После успешного запуска Slackware Linux 15.0 пригласит
-            вас ввести имя пользователя и пароль:
+            На экране сначала появится такая надпись:
             </p>
-            <pre>
-Welcome to Linux 5.15.94 x86_64 (tty1)
+<pre>
+SeaBIOS (version Arch Linux 1.16.2-1-1)
+
+
+iPXE (http://ipxe.org) 00:03.0 C900 PCI2.10 PnP PMM+BEFD3390+BEF33390 C900
+
+
+
+Booting from Hard Disk...
+
+LILO 24.2
+
+</pre>
+            <p>
+            И через пять секунд начнётся загрузка Slackware Linux. Если
+            загрузка пройдёт успешно, Slackware Linux будет приветствовать
+            следующим сообщением, запрашивая вас ввести имя пользователя и
+            пароль:
+            </p>
+<pre>
+Welcome to Linux 5.15.94 x86_64 (ttyS0)
 
 sl15 login:
-            </pre>
+</pre>
             <p>
             В образе <code>sl15.img</code> доступен только
             суперпользовател <code>root</code> с паролем
@@ -62,8 +130,8 @@ root@sl15:~#
             </pre>
             <p>
             Теперь вы можете следовать документации для новичков:
-            <a href=https://docs.slackware.com/slackware:beginners_guide>slackdoc</a>,
-            например, вам следует создать нового пользователя,
+            <a href=https://docs.slackware.com/slackware:beginners_guide>slackdoc</a>.
+            Например, вам следует создать нового пользователя,
             разлогиниться из-под <code>root</code> и залогиниться
             снова с новым пользователем.
             </p>

@@ -9,3 +9,9 @@ section.after {
                 display: table;
                 clear: both;
             }
+th, td {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+tr:hover {background-color: #D6EEEE;}

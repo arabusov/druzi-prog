@@ -15,7 +15,8 @@
 результате после вводного занятия у участников будет представление о том,
 как работают компьютеры внутри, и что на самом деле делают программы.
 
-![Ссылка на слайды](https://github.com/arabusov/druzi-prog/releases/download/v1.0/druzi-prog-intro-rc1.pdf)
+![Ссылка на слайды](https://github.com/arabusov/druzi-prog/releases/download/v1.1/druzi-prog-intro.pdf)
+                    
 
 ![DEC PDP-11/70 | Matthew Ratzloff | Flickr](./pdp-11.jpg)
 

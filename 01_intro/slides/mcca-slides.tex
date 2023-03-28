@@ -5,7 +5,8 @@
 \usepackage[english,russian]{babel}
 \usepackage{amsmath,amsfonts, amsthm,amssymb}
 \usepackage{dsfont}
-\usepackage{enumitem}
+%\usepackage{enumitem}
+
 \usepackage{bbm}
 \usefonttheme[onlymath]{serif}
 \usepackage{graphicx}
@@ -89,7 +90,8 @@
     t1=S, t2=CP, t3=R, t4={\ctikztextnot{Q}},
     t6=Q, nd=1}},
 }
-
+\usepackage{tikz}
+\usetikzlibrary{trees}
 \usepackage{amsmath}
 
 \usepackage{verbatim}
@@ -670,37 +672,31 @@
     \frametitle{Подготовка}
     \texttt{PuTTY} (Windows), \texttt{Termux} (Android)
     \par\vspace{0.25cm}
-    Wifi:
-    \begin{itemize}
-        \item Имя сети: \texttt{pdp11}
-        \item Пароль: имена двух создателей UNIX и их менеджера без
-            пробелов строчными буквами
-    \end{itemize}
     \par\vspace{0.25cm}
-    Проверка соединения: \texttt{ping 192.168.1.1}
+    Проверка соединения: \texttt{ping IP\_ADDRESS}
     \par\vspace{0.25cm}
     Конфигурация терминала:
     \begin{itemize}
-        \item Тип соединения: Telnet
-        \item IP: \texttt{192.168.1.1}
-        \item Порт: \texttt{5555}
+        \item Тип соединения: SSH
+        \item IP: \texttt{IP\_ADDRESS}
+        \item Порт: \texttt{22222}
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Успешное соединение}
     \begin{verbatim}
-C:\> telnet 192.168.1.1 5555
-Trying 192.168.1.1...
-Connected to 192.168.1.1.
-Escape character is '^]'.
 
-
-Connected to the PDP-11 simulator DCI device, line 0
-
-
-login: 
+ED25519 key fingerprint is SHA256:UOxq/SiPwFIxKUnZWnRqGnDJDAH0yoC1ivPSjdXrh/w.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
 	\end{verbatim}
+    Нужно ответить \texttt{yes} и нажать \texttt{Enter}
+\begin{verbatim}
+Warning: Permanently added 'HOSTNAME' (ED25519) to the list of known hosts.
+(username@hostname) Password:
+\end{verbatim}
+    Введите ваш пароль. Он не будет печататься на экране.
 \end{frame}
 
 \begin{frame}
@@ -732,11 +728,6 @@ login:
         \texttt{\^}\texttt{S} & Остановить вывод \\
         \texttt{\^}\texttt{Q} & Восстановить вывод
     \end{tabular}
-    \par\vspace{0.25cm}
-    По умолчанию \texttt{DELETE} функционирует как \texttt{\^}\texttt{C}
-    на V7
-    \par\vspace{0.25cm}
-    \texttt{DELETE} --- это \texttt{Backspace} или $\leftarrow$
 \end{frame}
 
 \begin{frame}[fragile]
@@ -753,83 +744,147 @@ login:
     \par\vspace{0.23cm}
     Справка о командах: \texttt{man}. Например: \texttt{man man}
     \par\vspace{0.23cm}
-    (V7 думает, что печатает вам на печатную машинку, ловите
-    вывод с помощью \texttt{\^}\texttt{S})
+    Ваше имя пользователя: \texttt{who am i}, или \texttt{who mom likes}
+    \begin{verbatim}
+[username@hostname:~]$ who am i
+username terminal_device        date time
+\end{verbatim}
     \par\vspace{0.23cm}
-    По умолчанию чтобы удалить введённый символ надо написать
-    \texttt{\#}
-    \par\vspace{0.23cm}
-    По умолчанию чтобы удалить введённую строку надо написать
-    \texttt{@}
-    \par\vspace{0.23cm}
-    <<Нормальная>> настройка: \begin{verbatim}
-stty erase "^h" kill "^u" nl0 cr0\end{verbatim}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Файловая система}
-    \only<1>{
     Всё есть файл
-    }\only<2->{
+    \par\vspace{0.25cm}
     Почти всё есть файл
-    }\only<3->{\par\vspace{0.25cm}
+    \par\vspace{0.25cm}
     Типы файлов: обычные, директории, специальные файлы устройств,
     \ldots
-    }
-\end{frame}
-
-\begin{frame}[fragile]
-    \frametitle{Файловая система}
-    \begin{verbatim}
-$ ls -ltr /
-total 343
--rw-rw-r-- 1 root       34 Dec 31  1969 .profile
--rwxrwxr-x 1 root    54122 Dec 31  1969 munix
-drwxr-xr-x 2 root      448 Dec 31  1969 dev
-drwxr-xr-x16 bin       304 Dec 31  1969 usr
--rwxrwxr-x 1 root    54826 Dec 31  1969 munix2
-drwxrwxr-x 2 bin       336 Jan 22  1979 lib
-drwxrwxr-x 2 bin      2480 May  5  1979 bin
--rwxrwxr-x 1 bin      6900 May 16  1979 boot
--rwxrwxr-x 1 sys     52850 Jun  8  1979 unix
-drwxrwxrwx 2 bin       304 Oct 23 16:31 tmp
-drwxr-xr-x 2 root      336 Oct 23 16:32 etc
+    \par\vspace{0.25cm}
+\begin{verbatim}
+localhost:~# pwd    # print current working directory
+/root
+localhost:~# cd /   # change directory (to the root "/")
+localhost:/# pwd    # print currernt working directory
+/
+localhost:/# cd bin # change directory (to the bin)
+localhost:/bin# ls echo # show list of files named echo
+echo
 \end{verbatim}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Файловая система}
     \begin{verbatim}
-$ od -c /.
-0000000 002  \0   .  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
-0000020 002  \0   .   .  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
-0000040   f  \0   u   s   r  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
-0000060   e  \0   b   i   n  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
-0000100 226  \0   e   t   c  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
-0000120   " 001   .   p   r   o   f   i   l   e  \0  \0  \0  \0  \0  \0
-0000140 205  \0   l   i   b  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
-0000160   q  \0   d   e   v  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
-0000200     001   m   u   n   i   x  \0  \0  \0  \0  \0  \0  \0  \0  \0
-0000220  \r 001   m   u   n   i   x   2  \0  \0  \0  \0  \0  \0  \0  \0
-...
-0000440
+# ls -l
+total 52
+drwxr-xr-x    2 root     root          2089 Jan  9  2021 bin
+drwxr-xr-x    4 root     root          2240 Mar 28 11:04 dev
+drwxr-xr-x   39 root     root          1979 Jan  9  2021 etc
+drwxr-xr-x    2 root     root            37 Jul  5  2020 home
+drwxr-xr-x    8 root     root           901 Aug 17  2020 lib
+drwxr-xr-x    2 root     root            37 May 29  2020 mnt
+dr-xr-xr-x   12 root     root             0 Mar 28 11:04 sys
+drwxrwxrwt    2 root     root            37 Jan  9  2021 tmp
+drwxr-xr-x   10 root     root           229 Jun 24  2020 usr
+drwxr-xr-x   16 root     root           348 Aug 27  2020 var
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Файловая система}
+\tikzstyle{every node}=[draw=black,thick,anchor=west]
+\tikzstyle{selected}=[draw=red,fill=red!30]
+\tikzstyle{optional}=[dashed,fill=gray!50]
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node {texmf}
+    child { node {doc}}		
+    child { node {fonts}}
+    child { node {source}}
+    child { node [selected] {tex}
+      child { node {generic}}
+      child { node [optional] {latex}}
+      child { node {plain}}
+    }
+    child [missing] {}				
+    child [missing] {}				
+    child [missing] {}				
+    child { node {texdoc}};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Текстовый редактор}
+    \begin{verbatim}
+[username@hostname]$ ed
+a
+some junk
+even more junk
+more and more
+.
+w
+?
+w junk
+39
+q
+[username@hostname]$
 \end{verbatim}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Текстовый редактор}
     \begin{verbatim}
-$ ed
-a
-some jusk
+[username@hostname]$ cat junk
+some junk
 even more junk
 more and more
-.
-w junk
-39
-q
-$
 \end{verbatim}
+    Более мощный редактор: VIsual Improved (\texttt{vim})
+\begin{verbatim}
+vimtutor uk # украинская версия
+vimtutor ru # русская версия
+\end{verbatim}
+\end{frame}
+
+\begin{frame}
+    \frametitle{План занятий}
+    \only<1->{
+        Основы языка Си
+    }\only<2->{\par\vspace{0.2cm}
+        Проектная работа
+        \begin{itemize}[<+->]
+            \item Веб-форум
+            \item Макетный компьютер
+            \item Операционная система
+            \item Компилятор Си
+            \item Олимпиадное программирование
+        \end{itemize}
+        }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Полезные ссылки}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{tabular}{l c}
+                Druzi prog веб-страница: &
+                \includegraphics[width=0.24\textwidth]{druzi-prog}\\
+                \texttt{vimtutor.uk} &
+                \includegraphics[width=0.24\textwidth]{vimtutor.uk}\\
+                \texttt{vimtutor.ru} &
+                \includegraphics[width=0.24\textwidth]{vimtutor.ru}\\
+            \end{tabular}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{tabular}{l c}
+                Хакеры Druzi телеграм-группа: &
+                \includegraphics[width=0.24\textwidth]{tg-qr}\\
+            \end{tabular}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \end{document}

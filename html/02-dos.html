@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>Druzi: Введение в программирование</title>
+  <link rel="stylesheet" type="text/css" href="common.css">
+  <link rel="icon" type="image/x-icon" href="favicon.png">
+ </head>
+
+ <body>
+ <div class="content">
+
+<h2>Основы вычислительной техники</h2>
+<p>
+ 
+</p>
+<h3>Настройка среды</h3>
+<p>
+
+Для начала установите <a href=https://www.dosbox.com/download.php?main=1>DOSBox</a>.
+После этого настройте конфигурационный файл (в Windows:
+<code>C:\Users\{username}\AppData\Local\DOSBox\dosbox-{version}.conf</code>).
+
+Скачайте
+<a href=https://rabusov.de/~arabusov/druzi/dosbox.zip>Pascal + utils</a>.
+и распакуйте его в <code>C:\Users\{username}\dosbox</code>.
+
+В конце конфигурационного файла добавьте:
+<pre>
+mount c C:\Users\{username}\dosbox
+c:
+PATH=%PATH;;C:\;C:\TP\BIN;C:\UTILS
+</pre>
+
+
+</p>
+
+<a href=index.html>Главная страница</a>
+</div> 
+ </body>
+</html>

@@ -5,6 +5,18 @@
   <title>Druzi: Введение в программирование</title>
   <link rel="stylesheet" type="text/css" href="common.css">
   <link rel="icon" type="image/x-icon" href="favicon.png">
+<style>
+ol {
+    counter-reset: item
+}
+li {
+    display: block
+}
+li:before {
+    content: counters(item, ".")" ";
+    counter-increment: item
+}
+</style>
  </head>
 
  <body>
@@ -12,11 +24,29 @@
 
 <h2>Основы вычислительной техники</h2>
 <p>
- 
-</p>
-<h3>Настройка среды</h3>
 
-<h4>Windows</h4>
+    <a href=index.html>Назад</a>
+<ol>
+
+    <li><a href="#conf">Настройка</a></li>
+    <ol>
+        <li><a href="#win">Windows</a></li>
+        <li><a href="#android">Android</a></li>
+    </ol>
+
+    <li><a href="#tutorial">Первые программы</a></li>
+    <ol>
+        <li><a href="#hello">Hello world</a></li>
+        <li><a href="#infhello">Бесконечный Hello</a></li>
+        <li><a href="#name">Chat GPT на Паскале</a></li>
+        <li><a href="#sum">Простой калькулятор</a></li>
+    </ol>
+</ol>
+
+</p>
+<h3 id="conf">Настройка среды</h3>
+
+<h4 id="win">Windows</h4>
 
 <p>
 Для начала установите <a href=https://www.dosbox.com/download.php?main=1>DOSBox</a>.
@@ -42,7 +72,7 @@ PATH=C:\;C:\TP\BIN;C:\UTILS;
 </pre>
 </p>
 
-<h4>Android</h4>
+<h4 id="android">Android</h4>
 <p>
 Скачайте
 <a href=http://rabusov.de/~arabusov/druzi/dosbox.zip>Pascal + utils</a>
@@ -112,6 +142,64 @@ PATH=C:\;C:\BIN\TP;C:\UTILS;
 <p>
 Готово! Вы можете приступать к хакерству.
 </p>
+
+<h3 id="tutorial">Примеры программ на занятии</h3>
+
+<h4 id="hello">Hello-world:</h4>
+<pre>
+program hello;
+
+begin
+    writeln('hello world');
+    readln
+end.
+</pre>
+
+<h4 id="infhello">Бесконечный hello-world:</h4>
+<pre>
+program hello;
+
+uses crt;
+
+begin
+        repeat
+                writeln('hello');
+        until keypressed
+end.
+</pre>
+
+<h4 id="name">ChatGPT на Паскале:</h4>
+<pre>
+program chat;
+
+var
+        nam: string;
+
+begin
+        writeln('Hi, what is your name?');
+        readln(nam);
+        writeln('Nice to meet you, ', nam);
+        readln
+end.
+</pre>
+
+<h4 id="calc">Простой калькулятор:</h4>
+<pre>
+program sum;
+
+var
+        a, b: integer;
+        c: integer;
+begin
+        writeln('Please, enter the first number');
+        readln(a);
+        writeln('Please, enter the second number');
+        readln(b);
+        c := a + b;
+        writeln('Sum is ', c);
+        readln
+end.
+</pre>
 
 <a href=index.html>Главная страница</a>
 </div> 

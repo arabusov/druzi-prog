@@ -15,24 +15,102 @@
  
 </p>
 <h3>Настройка среды</h3>
+
+<h4>Windows</h4>
+
 <p>
-
 Для начала установите <a href=https://www.dosbox.com/download.php?main=1>DOSBox</a>.
-После этого настройте конфигурационный файл (в Windows:
-<code>C:\Users\{username}\AppData\Local\DOSBox\dosbox-{version}.conf</code>).
+Затем скачайте
+<a href=http://rabusov.de/~arabusov/druzi/dosbox.zip>Pascal + utils</a>
+и распакуйте его в <code>C:\Users\{username}\dosbox</code>,
+где <code>{username}</code> &mdash; это имя вашего пользователя в Windows.
+</p>
 
-Скачайте
-<a href=https://rabusov.de/~arabusov/druzi/dosbox.zip>Pascal + utils</a>.
-и распакуйте его в <code>C:\Users\{username}\dosbox</code>.
+<p>
+После этого найдите и настройте конфигурационный файл
+<code>C:\Users\{username}\AppData\Local\DOSBox\dosbox-{version}.conf</code>,
+<code>{version}</code> &mdash; это версия DOSBox, которую вы скачали (на
+данный момент это 0.74).
+</p>
 
+<p>
 В конце конфигурационного файла добавьте:
 <pre>
 mount c C:\Users\{username}\dosbox
 c:
-PATH=%PATH;;C:\;C:\TP\BIN;C:\UTILS
+PATH=C:\;C:\TP\BIN;C:\UTILS;
 </pre>
+</p>
 
+<h4>Android</h4>
+<p>
+Скачайте
+<a href=http://rabusov.de/~arabusov/druzi/dosbox.zip>Pascal + utils</a>
+и распакуйте его в корневую систему на памяти телефона. Затем 
+скачайте <a href=
+    https://play.google.com/store/apps/details?id=bruenor.magicbox.free
+    >DOSBox for Android</a>. На телефоне появится следующая иконка:
+</p>
+<p>
+<img height="100"
+        src="https://play-lh.googleusercontent.com/nUXxhwZHt9fErf5dDaT6W7WR_oXhywLm4vC8TvJqGawCfy4IXmQ6LPeFrNeNA_gq9Ro=w240-h480">
 
+</p>
+
+Запустите Magic Dosbox Lite и нажмите на плюсик:
+<p>
+<img src="img/dosbox-android/photo_01.jpg" height="600" height="600" alt="Add new instance" />
+
+</p>
+Добавьте новую оболочку:<p>
+<img src="img/dosbox-android/photo_02.jpg" height="600" height="600" alt="Add new game" />
+
+</p>
+Введите имя для новой оболочки (например, <code>shell</code>):<p>
+<img src="img/dosbox-android/photo_03.jpg" height="600" alt="Configure-1" />
+
+</p>
+
+<p>
+Отметьте галочкой <code>PC Speaker</code> и <code>Expert</code>, нажмите на
+кнопку справа от <code>Expert commands</code>:
+</p><p>
+<img src="img/dosbox-android/photo_05.jpg" height="600" alt="Configure-2" />
+</p><p>
+
+</p><p>
+Добавьте в конце тектового поля следующие команды:
+<pre>
+mount c: /mnt/sdcard/Dosbox
+c:
+PATH=C:\;C:\BIN\TP;C:\UTILS;
+</pre>
+</p><p>
+
+<img src="img/dosbox-android/photo_06.jpg" height="600" alt="" />
+
+</p><p>
+Сохраните конфигурацию и запустите <code>shell</code>. Вы должны увидеть
+следующий экран:
+</p><p>
+<img src="img/dosbox-android/photo_07.jpg" height="600" alt="Run Dosbox" />
+
+</p><p>
+Откройте клавиатуру:
+</p><p>
+
+<img src="img/dosbox-android/photo_08.jpg" height="600" alt="Keyboard" />
+
+</p><p>
+Введите <code>TPX</code> и нажмите <code>Enter</code>. Если всё настроено
+правильно, запустится Turbo Pascal 7.0:
+</p><p>
+
+<img src="img/dosbox-android/photo_09.jpg" height="600" alt="Add new instance" />
+</p>
+
+<p>
+Готово! Вы можете приступать к хакерству.
 </p>
 
 <a href=index.html>Главная страница</a>

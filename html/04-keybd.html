@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>Druzi: Введение в программирование</title>
+  <link rel="stylesheet" type="text/css" href="common.css">
+  <link rel="icon" type="image/x-icon" href="favicon.png">
+<style>
+ol {
+    counter-reset: item
+}
+li {
+    display: block
+}
+li:before {
+    content: counters(item, ".")" ";
+    counter-increment: item
+}
+</style>
+ </head>
+ <body>
+ <style>
+#content {
+    position: relative;
+}
+    #content img {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+</style>
+<body>
+ <div class="content">
+
+<h2>Основы вычислительной техники</h2>
+<p>
+
+    <a href=index.html>Назад</a>
+<ol>
+    <li><a href="#types">Типы данных</a></li>
+    <li><a href="#kbd">Клавиатурный ввод</a></li>
+</ol>
+</p>
+<h3 id="types">Типы данных</h3>
+<p>
+Внутри компьютера электрические сигналы соответствуют числам в соответствии
+с определённой договорённостью. Может быть такая договорённость: если
+напряжение на одном проводке от нуля до двух Вольт, то это нуль, если от
+трёх до пяти &mdash; то это один. Тогда несоклько проводков можно
+использовать для кодирования двоичных чисел. В общем случае правило, по
+которому набору сигналов придают какое-то особое значение, называют типом
+данных.
+</p>
+<p>
+В Паскале есть несколько типов для целых числе в зависимости от их размера,
+тип для действительных чисел, тип для логических выражений, и тип для
+символов.
+</p>
+
+<p>
+Для Турбо Паскаля используйте следующие типы переменных:
+<code>byte</code> для целых чисел в диапазоне 0&ndash;255,
+<code>word</code> в диапазоне 0&ndash;65535,
+<code>integer</code> в диапазоне -32768&ndash;32767,
+<code>boolean</code> для логических значений <code>TRUE</code> или
+            <code>FALSE</code>,
+<code>real</code> действительных чисел и
+<code>char</code> для символов.
+</p>
+<pre>
+program test_integer;
+
+var x: integer;     { попробуйте поменять integer на другой тип и посмотрите
+                      что произойдёт. }
+
+begin
+    x := 2;
+    repeat
+        writeln(x);
+        x := x*2;
+    until x = 0;
+    readln;
+end.
+</pre>
+<h3 id="kbd">Клавиатурный ввод</h3>
+<p>
+<pre>
+program keylogger;
+
+uses crt;
+
+var
+    ch: char;                       { тип char используется для символов}
+
+begin
+    repeat
+        if keypressed then          { если какая-то клавиша нажата...    }
+        begin
+            ch := readkey;          { readkey читает символ клавиши }
+            write(ord(ch), ' ');    { ord выдаёт числовой код для символаa }
+            if ch = #0 then { некоторые клавиши генерируют два символа на нажатие }
+            begin           { первый из них будет всегда нулём      }
+                ch := readkey;
+                write(ord(ch));
+            end;
+            writeln;
+        end
+    until ch = #27      { #27 означает клавишу ESC }
+end.
+</pre>
+</p>
+ </div>
+
+<div class="content">
+<a href=index.html>Главная страница</a>
+</div> 
+ </body>
+</html>

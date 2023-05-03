@@ -52,13 +52,22 @@ li:before {
 Для начала установите <a href=https://www.dosbox.com/download.php?main=1>DOSBox</a>.
 Затем скачайте
 <a href=http://rabusov.de/~arabusov/druzi/dosbox.zip>Pascal + utils</a>
-и распакуйте его в <code>C:\Users\{username}\dosbox</code>,
-где <code>{username}</code> &mdash; это имя вашего пользователя в Windows.
+и распакуйте его в <code>C:\dosbox</code>. Убедитесь, что при распаковке ваш
+архиватор сработал правильно, так что в папке
+<pre>C:\dosbox\TP\BIN\</pre> находится файл <code>TPX.EXE</code>.
 </p>
 
 <p>
-После этого найдите и настройте конфигурационный файл
-<code>C:\Users\{username}\AppData\Local\DOSBox\dosbox-{version}.conf</code>,
+После этого запустите DOSBox. Появится окно, в котором будет приглашение
+командной строки вида
+<pre>
+Z:\>
+</pre>
+Напишите <code>exit</code> и нажмите <code>Enter</code>. DOSBox закроется.
+</p>
+<p>
+Теперь найдите и настройте конфигурационный файл DOSBox,
+<code>C:\Users\%{username}\AppData\Local\DOSBox\dosbox-{version}.conf</code>,
 <code>{version}</code> &mdash; это версия DOSBox, которую вы скачали (на
 данный момент это 0.74).
 </p>
@@ -66,7 +75,7 @@ li:before {
 <p>
 В конце конфигурационного файла добавьте:
 <pre>
-mount c C:\Users\{username}\dosbox
+mount c C:\dosbox
 c:
 PATH=C:\;C:\TP\BIN;C:\UTILS;
 </pre>

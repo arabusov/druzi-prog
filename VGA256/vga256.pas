@@ -11,6 +11,7 @@ procedure CloseGraph;
 procedure SetColor(clr: byte);
 procedure Line(x0, y0, x1, y1: integer);
 function GetColor: byte;
+procedure circle(x0, y0, r: integer);
 
 const
     GetNX = 320;
@@ -115,6 +116,33 @@ begin
             y0 := y0 + sy;
         end
     end
+end;
+
+procedure circle(x0, y0, r: integer);
+var t1, t2: integer;
+    x, y: integer;
+begin
+    t1 := r div 16;
+    x := r;
+    y := 0;
+    repeat
+        mem[base:(x0+x)+(y0+y)*GetNX] := color;
+        mem[base:(x0-x)+(y0+y)*GetNX] := color;
+        mem[base:(x0+x)+(y0-y)*GetNX] := color;
+        mem[base:(x0-x)+(y0-y)*GetNX] := color;
+        mem[base:(x0+y)+(y0+x)*GetNX] := color;
+        mem[base:(x0-y)+(y0+x)*GetNX] := color;
+        mem[base:(x0+y)+(y0-x)*GetNX] := color;
+        mem[base:(x0-y)+(y0-x)*GetNX] := color;
+        y := y + 1;
+        t1 := t1 + y;
+        t2 := t1 - x;
+        if t2 >= 0 then
+        begin
+            t1 := t2;
+            x := x - 1
+        end;
+    until x < y
 end;
 
 end.

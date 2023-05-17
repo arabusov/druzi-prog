@@ -35,9 +35,25 @@ begin
     end
 end;
 
+procedure sync_vretrace; assembler;
+asm
+                           { If vert. retrace bit is set, wait for it to clear }
+    mov dx, 3dah           { dx <- VGA status register }
+@VRET_SET:
+    in al, dx              { al <- status byte }
+    and al, 8              { is bit 3 (vertical retrace bit) set }
+    jnz @VRET_SET          { If so, wait for it to clear }
+
+@VRET_CLR:                 { When it's cleared, wait for it to be set }
+    in al, dx
+    and al, 8
+    jz @VRET_CLR           { loop back till vert. retrace bit is newly set }
+end;
+
 procedure PutPixel(x, y : integer; color : byte);
 begin
-  mem[base:x+y*GetNX] := color;
+    sync_vretrace;
+    mem[base:x+y*GetNX] := color;
 end; 
 
 procedure Bar (x1, y1, x2, y2: integer);
@@ -56,12 +72,14 @@ end;
 
 procedure ClS(color : byte);
 begin
+    sync_vretrace;
     FillChar(mem[base:0000], GetNX*GetNY, color);
 end;
 
 procedure rect(x1, y1, x2, y2: integer);
 var i: integer;
 begin
+    sync_vretrace;
     for i := x1 to x2 do
         mem[base:i + (y1*GetNX)] := color;
     for i := x1 to x2 do
@@ -95,6 +113,7 @@ begin
         sy := -1;
     error := dx + dy;
     
+    sync_vretrace;
     while true do
     begin
         mem[base:x0 + y0*GetNX] := color;
@@ -125,6 +144,7 @@ begin
     t1 := r div 16;
     x := r;
     y := 0;
+    sync_vretrace;
     repeat
         mem[base:(x0+x)+(y0+y)*GetNX] := color;
         mem[base:(x0-x)+(y0+y)*GetNX] := color;

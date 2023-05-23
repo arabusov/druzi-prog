@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>Druzi: Введение в программирование</title>
+  <link rel="stylesheet" type="text/css" href="common.css">
+  <link rel="icon" type="image/x-icon" href="favicon.png">
+<style>
+ol {
+    counter-reset: item
+}
+li {
+    display: block
+}
+li:before {
+    content: counters(item, ".")" ";
+    counter-increment: item
+}
+</style>
+ </head>
+ <body>
+ <style>
+#content {
+    position: relative;
+}
+    #content img {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+</style>
+<body>
+ <div class="content">
+
+<h2>Основы вычислительной техники</h2>
+<p>
+
+    <a href=index.html>Назад</a>
+<ol>
+    <li><a href="#subroutines">Подпрограммы</a></li>
+    <li><a href="#recursion">Рекурсия</a></li>
+</ol>
+</p>
+<h3 id="subroutines">Подпрограммы</h3>
+ </div>
+ <div class="content">
+<p>
+Подпрограмма по сути является маленькой программой. Однако её нельзя вызвать
+обычному пользователю, вместо этого она служит удобным механизмом для
+программиста, чтобы избежать повторного написания кода. У подпрограммы могут
+быть аргументы. Так, допустим, вы придумали, как нарисовать квадрат, но
+хотите его нарисовать в разных местах. Для этого надо написать подпрограмму,
+аргументами которой будут координаты квадрата и его размер. Тогда в основной
+программе вы сможете нарисовать квадрат где угодно, вызвав подпрограмму.
+Например, так:
+<code>square(x, y, a)</code>, где x будет горизонтальной координатой, y
+будет вертикальной координатой, а a &mdash; размером квадрата.
+</p>
+<p>
+В Паскале есть ключевое слово <code>procedure</code>, которое объявляет
+подпрограмму. Использовать его надо таким образом:
+</p>
+ </div>
+ <div id="content">
+     <img src="img/squares.png" width="30%" class="ribbon" alt="" />
+ </div>
+
+ <div class="content">
+     <p>
+<pre>
+program square;
+
+uses graph;
+
+procedure square2(x, y, a: integer);
+{ ключевое слово procedure, имя подпрограммы square2, аргументы в скобках
+  через запятую, тип аргументов указывается после двоеточия }
+begin
+    line(x-a, y-a, x+a, y-a);
+    line(x-a, y-a, x-a, y+a);
+    line(x+a, y+a, x+a, y-a);
+    line(x+a, y+a, x-a, y+a);
+end; { в отличии от основной программы, после подпрограммы ставится точка с
+запятой }
+
+var
+    gd, gm: integer;
+begin
+    initgraph(gd, gm, 'C:\TP\BGI');
+    square2(getmaxx div 2,getmaxy div 2, 100); { вызов подпрограммы }
+    square2(getmaxx div 2,getmaxy div 2, 50); { вызываем одну и ту же
+    подпрограммы два раза }
+    readln;
+    closegraph
+end.
+</pre>
+     </p>
+ </div>
+ <div class="content">
+<h3 id="recursion">Рекурсия</h3>
+<p>
+Рекурсия &mdash; это вызов подпрограммы внутри этой же самой подпрограммы.
+Рекурсия является мощным, но опасным инструментом. Нередко неразумное
+использование рекусии приводит к медленному коду, а то и того хуже &mdash; к
+поломкам программы! Мы рассмотрим простой пример рисования орнамента из
+квадратов, а чтобы наша программа не ломалась, мы поставим условие на размер
+квадрата, который мы рисуем, и при каждом вызове подпрограммы мы будем
+уменьшать этот размер.
+</p>
+ </div>
+ <div id="content">
+     <img src="img/recursion.png" width="30%" class="ribbon" alt="" />
+ </div>
+
+ <div class="content">
+<p>
+<pre>
+program simplestar;
+
+uses graph;
+
+var gd, gm: integer;
+
+procedure sstar(x, y, r, c: integer);
+var
+    r2: integer;
+begin
+    r2 := r div 2; { это размер, который мы передадим на уровень ниже }
+    c := c + 1;     { а это цвет, который тоже пойдёт на уровень ниже }
+    if r2 > 0 then  { рекурсивный вызов только если будущий размер не ноль }
+    begin
+        setcolor(c); { сначала рисуем квадрат цвета c }
+        rectangle(x - r2, y - r2, x + r2, y + r2);
+        sstar(x - r, y - r, r2, c); { а потом вызываем четыре раза сами
+                                      себя, но с новыми параметрами }
+        sstar(x + r, y - r, r2, c);
+        sstar(x - r, y + r, r2, c);
+        sstar(x + r, y + r, r2, c);
+    end
+end;
+
+begin
+    initgraph(gd, gm, 'C:\TP\BGI');
+    setcolor(white);
+    sstar(getmaxy div 2, getmaxy div 2, getmaxy div 4, 1);
+    readln;
+    closegraph
+end.
+</pre>
+</p>
+ </div>
+
+<div class="content">
+<a href=index.html>Главная страница</a>
+</div> 
+ </body>
+</html>

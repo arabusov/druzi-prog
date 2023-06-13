@@ -2,3 +2,5 @@
 *
 !ex
 !*.pas
+!.gitignore
+!sol

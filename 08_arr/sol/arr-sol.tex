@@ -60,7 +60,8 @@
 \begin{document}
 \section{Массивы}
 \subsubsection{Рекурсия}
-Повторим предыдущую тему: нарисуйте двоичное дерево.
+Повторим предыдущую тему: нарисуйте двоичное дерево,
+смотри~рис.~\ref{fig:btree}.
 \begin{lstlisting}
 procedure btree(x, y, xstep, level: integer);
 var
@@ -78,6 +79,13 @@ begin
     end
 end;
 \end{lstlisting}
+\begin{figure}[!ht]
+    \begin{centering}
+        \includegraphics{btree}
+        \caption{Двоичное дерево.}
+        \label{fig:btree}
+    \end{centering}
+\end{figure}
 \subsubsection{Границы массива}
 Что произойдёт, если выйти за границы массива?
 \begin{lstlisting}

@@ -1,2 +1,4 @@
-arr
-arr.o
+*.o
+*
+!ex
+!*.pas

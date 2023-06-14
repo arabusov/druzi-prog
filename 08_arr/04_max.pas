@@ -18,12 +18,13 @@ end;
 
 function maximum: integer;
 var
-    i: integer;
+    i, tmp: integer;
 begin
-    maximum := 0;
+    tmp := 0;
     for i := 1 to 24 do
-        if maximum < nums[i] then
-            maximum := nums[i]
+        if tmp < nums[i] then
+            tmp := nums[i];
+    maximum := tmp;
 end;
 
 begin

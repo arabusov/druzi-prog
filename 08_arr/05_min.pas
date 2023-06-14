@@ -18,12 +18,13 @@ end;
 
 function minimum: integer;
 var
-    i: integer;
+    i, tmp: integer;
 begin
-    minimum := 100;
+    tmp := 100;
     for i := 1 to 24 do
-        if minimum > nums[i] then
-            minimum := nums[i]
+        if tmp > nums[i] then
+            tmp := nums[i];
+    minimum := tmp;
 end;
 
 begin

@@ -4,6 +4,7 @@ use CGI;
 use File::Temp qw/ tempfile tempdir /;
 use File::Path qw( make_path );
 use File::HomeDir;
+use File::Basename;
 
 my $query = new CGI;
 my $upload_filehandle = $query->upload("program");
@@ -57,9 +58,9 @@ system "fpc -vrewn $filename";
 if (-e $exename)
 {
     print '<br>Program output:<br>';
-    system "echo | $exename";
-    system "rm $exename";
+    system "echo | firejail $exename --private";
     system "rm $exename.o";
+    system "rm $exename";
 }
 else
 {

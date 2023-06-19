@@ -1,8 +1,8 @@
 program sqrt_demo;
 
-uses oglgraph;
+uses graph;
 
-var gd, gm: smallint;
+var gd, gm: integer;
 
 const scale=8;
 

@@ -7,7 +7,7 @@ begin
     writeln('Assume we want to divide a by f, both a and f > 0.');
     writeln('Then, one can write');
     writeln('   a = f*d + r,');
-    writeln('where 0 <= r < f, r is called a reminder');
+    writeln('where 0 <= r < f, r is called a remainder');
     writeln('If a is divisable by f, r = 0');
     writeln('Let us check it experimentaly:');
     f := 7;

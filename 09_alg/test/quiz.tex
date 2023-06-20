@@ -1,0 +1,71 @@
+\documentclass[10,a4paper]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+%koi8-r]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[top=1cm,bottom=1cm]{geometry}
+
+% \usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[colorlinks=true, linkcolor=Maroon]{hyperref}
+\pagestyle{empty}
+
+
+\newcommand*{\mc}{}
+\def\mc#1#{\mathcoloraux{#1}}
+\newcommand*{\mathcoloraux}[3]{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+
+\usepackage{wrapfig}
+
+
+\usepackage{graphicx}
+\usepackage{physics}
+
+\usepackage{textcomp}
+
+\usepackage{comment}
+\newcommand{\fref}[1]{Рис.~\ref{#1}}
+\newcommand{\tref}[1]{Таб.~\ref{#1}}
+\newcommand{\eref}[1]{(\ref{#1})}
+
+
+\renewcommand{\labelenumii}{\arabic{enumii}.}
+\renewcommand{\thesubsubsection}{\arabic{subsubsection}}
+
+\usepackage{listings}
+
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+\lstset{framextopmargin=50pt}
+\lstset{language=Pascal,
+    keywordstyle=\color{blue},
+    commentstyle=\color{magenta},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{orange},
+    numbers=left
+}
+
+\setcounter{secnumdepth}{6}
+\setcounter{tocdepth}{4}
+
+\begin{document}
+\section{Проверочная работа}
+Для каждой приведённой программы напишите результат её работы.
+\subsubsection{Арифметика}
+\lstinputlisting{01_arith.pas}
+\subsubsection{Геометрия}
+\lstinputlisting{02_geom.pas}
+\subsubsection{Условный переход}
+\lstinputlisting{03_cond.pas}
+\subsubsection{Цикл}
+\lstinputlisting{04_loop.pas}
+\subsubsection{Массив}
+\lstinputlisting{05_array.pas}
+\end{document}

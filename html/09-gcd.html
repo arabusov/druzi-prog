@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>Druzi: Введение в программирование</title>
+  <link rel="stylesheet" type="text/css" href="common.css">
+  <link rel="icon" type="image/x-icon" href="favicon.png">
+<style>
+ol {
+    counter-reset: item
+}
+li {
+    display: block
+}
+li:before {
+    content: counters(item, ".")" ";
+    counter-increment: item
+}
+</style>
+ </head>
+ <body>
+ <style>
+#content {
+    position: relative;
+}
+    #content img {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+
+
+#content video {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+}
+</style>
+<body>
+ <div class="content">
+
+<h2>Основы вычислительной техники</h2>
+<p>
+
+    <a href=index.html>Назад</a>
+<ol>
+    <li><a href="#divmod">Целочисленное деление</a></li>
+    <li><a href="#gcd">Наибольший общий делитель</a></li>
+    <li><a href="#plot">График функции</a></li>
+</ol>
+</p>
+ </div>
+ <div class="content">
+<h3 id="subroutines">Целочисленное деление</h3>
+<p>
+<pre>
+program modulo_example;
+
+var a, f: integer;
+
+begin
+    f := 7;
+    for a := 1 to 10 do
+        writeln('a = ', a, ', d = ', a div f, ', r = ', a mod f)
+end.
+</pre>
+</p>
+
+ </div>
+ <div id="content">
+     <img src="img/divmod.png" width="30%" class="ribbon" alt="" />
+ </div>
+
+ <div class="content">
+<h4 id="subroutines">График функций div и mod</h4>
+<p>
+<pre>
+program div_mod_demo;
+
+uses graph;
+
+var gd, gm: integer;
+
+const scale=8;
+
+function scr_x(x: integer): word;
+begin
+    scr_x := (getmaxx - getmaxy) div 2 + scale*x;
+end;
+
+function scr_y(y: integer): word;
+begin
+    scr_y := getmaxy div 2 - scale*y;
+end;
+
+var x, y, sx, sy1, sy2: word;
+
+var
+    prev_sx, prev_sy1, prev_sy2: word;
+
+const d = 7;
+
+procedure grid;
+var x, y, dY: integer;
+const step=10;
+begin
+    setcolor(8);
+    for x := 1 to (getmaxy div (scale*step)) do
+    begin
+        sx := scr_x(x*step);
+        line(sx, 0, sx, getmaxy);
+    end;
+    dY := getmaxy div (scale*step);
+    for y := -dY to dY do
+    begin
+        sy1 := scr_y(y*step);
+        line (0, sy1, getmaxx, sy1);
+    end;
+    setcolor(15);
+    sx := scr_x(0);
+    line(sx, 0, sx, getmaxy);
+    sy1 := scr_y(0);
+    line(0, sy1, getmaxx, sy1);
+end;
+
+begin
+    initgraph(gd, gm, 'C:\TP\BGI');
+    grid;
+    prev_sx := scr_x(0);
+    prev_sy1 := scr_y(0);
+    prev_sy2 := scr_y(0);
+    for x := 1 to (getmaxy div scale) do
+    begin
+        y := x div d;
+        sx := scr_x(x);
+        sy1 := scr_y(y);
+        setcolor(5);
+        line(prev_sx, prev_sy1, sx, sy1);
+        y := x mod d;
+        sy2 := scr_y(y);
+        setcolor(10);
+        line(prev_sx, prev_sy2, sx, sy2);
+        prev_sx := sx;
+        prev_sy1 := sy1;
+        prev_sy2 := sy2;
+    end;
+    readln;
+    closegraph
+end.
+</pre>
+</p>
+<h3 id="gcd">Наибольший общий делитель</h3>
+<p>
+<pre>
+program gcd_example(input, output);
+var x, y: integer;
+
+function gcd(u, v: integer): integer;
+var t: integer;
+begin
+    if u < v then
+        t := u
+    else
+        t := v;
+    while (u mod t <> 0) or (v mod t <> 0) do
+        t := t - 1;
+    gcd := t;
+end;
+
+begin
+    while not eof do
+    begin
+        readln(x, y);
+        writeln(x, ' ', y, ' ', gcd(abs(x), abs(y)));
+    end
+end.
+</pre>
+</p>
+<h3 id="gcd">Наибольший общий делитель: рекурсивная реализация</h3>
+<p>
+<pre>
+program gcd_recursive_example;
+var x, y: integer;
+
+function gcd(u, v: integer): integer;
+begin
+    if v = 0 then
+        gcd := u
+    else
+        gcd := gcd(v, u mod v);
+end;
+
+begin
+    while not eof do
+    begin
+        readln(x, y);
+        writeln(x, ' ', y, ' ', gcd(abs(x), abs(y)));
+    end
+end.
+</pre>
+</p>
+ </div>
+ <div id="content">
+    <video width="30%" class="ribbon" controls>
+        <source src="video/gcdanim.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+ </div>
+ <div class="content">
+<h3 id="gcd">Наибольший общий делитель: визуализация</h3>
+<p>
+<pre>
+program rectangles_gcd;
+
+uses graph;
+
+var
+    gd, gm: integer;
+
+procedure gcd_rec(x, y, dx, dy: integer);
+begin
+    if (dx > 0) and (dy > 0) then
+        if dx > dy then
+        begin
+            rectangle(x, y, x + dy, y + dy);
+            readln;
+            gcd_rec(x + dy, y, dx - dy, dy)
+        end
+        else
+        begin
+            rectangle(x, y, x + dx, y + dx);
+            readln;
+            gcd_rec(x, y + dx, dx, dy - dx);
+        end
+end;
+
+procedure draw_gcd(u, v: integer);
+var x0, y0: integer;
+begin
+    x0 := (getmaxx - u) div 2;
+    y0 := (getmaxy - v) div 2;
+    setcolor(7);
+    rectangle(x0, y0, u+x0+1, v+y0+1);
+    readln;
+    setcolor(15);
+    gcd_rec(x0, y0, u, v);
+end;
+
+begin
+    initgraph(gd, gm, 'C:\TP\BGI');
+    draw_gcd(324, 138);
+    closegraph
+end.
+</pre>
+</p>
+ </div>
+ <div id="content">
+     <img src="img/sqrt.png" width="30%" class="ribbon" alt="График корня" />
+ </div>
+ <div class="content">
+<p>
+<h3 id="plot">График функций</h3>
+<pre>
+program sqrt_demo;
+
+uses graph;
+
+var gd, gm: integer;
+
+const scale=8;
+
+function scr_x(x: real): word;
+begin
+    scr_x := (getmaxx - getmaxy) div 2 + round(scale*x);
+end;
+
+function scr_y(y: real): word;
+begin
+    scr_y := getmaxy div 2 - round(scale*y);
+end;
+
+var
+    sx, sy1: word;
+    prev_sx, prev_sy1: word;
+
+procedure grid;
+var x, y, dY: integer;
+const step=10;
+begin
+    setcolor(8);
+    for x := 1 to (getmaxy div (scale*step)) do
+    begin
+        sx := scr_x(x*step);
+        line(sx, 0, sx, getmaxy);
+    end;
+    dY := getmaxy div (scale*step);
+    for y := -dY to dY do
+    begin
+        sy1 := scr_y(y*step);
+        line (0, sy1, getmaxx, sy1);
+    end;
+    setcolor(15);
+    sx := scr_x(0);
+    line(sx, 0, sx, getmaxy);
+    sy1 := scr_y(0);
+    line(0, sy1, getmaxx, sy1);
+end;
+
+var x, y: real;
+
+begin
+    initgraph(gd, gm, 'C:\TP\BGI');
+    grid;
+    prev_sx := scr_x(0);
+    prev_sy1 := scr_y(0);
+    x := 0.;
+    while x < (getmaxy div scale) do
+    begin
+        y := 3.*sqrt(x);
+        sx := scr_x(x);
+        sy1 := scr_y(y);
+        setcolor(5);
+        line(prev_sx, prev_sy1, sx, sy1);
+        prev_sx := sx;
+        prev_sy1 := sy1;
+        x := x + 1;
+    end;
+    readln;
+    closegraph
+end.
+</pre>
+</p>
+ </div>
+<div class="content">
+<a href=index.html>Главная страница</a>
+</div> 
+ </body>
+</html>

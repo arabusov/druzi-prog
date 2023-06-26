@@ -21,6 +21,8 @@ begin
         a[i] := random(max_val) + 1
 end;
 
+{ Простая подпрограмма печати массива на экран, целая строчка тратится
+    на одиин элемент }
 procedure print_array;
 var
     i: integer;
@@ -29,24 +31,33 @@ begin
         writeln('a[', i, '] = ', a[i]);
 end;
 
+{ Подпрограмма печати массива на экран в расчёте на то что в массиве
+    каждый элемент меньше сотни, тогда в строку поместится 24 элемента }
 procedure write_array;
 var
     i: integer;
 begin
     for i := 1 to N do
         write(a[i]:3);
+    { После вывода всех символов надо обозначить конец строки,
+        иначе последующий вывод на экран испортится }
     writeln
 end;
 
+{ Подпрограмма, которая рисует горизонтальную линию, длина зависит
+    от заданного параметра len; линия займёт 3*len символов }
 procedure hline(len: integer);
 var
     i: integer;
 begin
     for i := 1 to len do
         write('---');
+    { После вывода всех символов надо обозначить конец строки,
+        иначе последующий вывод на экран испортится }
     writeln
 end;
 
+{ Подпрограмма, которая печатает заголовок таблицы на экран }
 procedure write_header;
 var
     i: integer;
@@ -58,6 +69,7 @@ begin
     hline(N + 1)
 end;
 
+{ Подпрограмма печати начального массива }
 procedure present_array;
 begin
     write_header;
@@ -65,31 +77,10 @@ begin
     write_array
 end;
 
-procedure straight_insertion;
-var
-    i, j: integer;
-    x: integer;
-begin
-    for i := 2 to N do
-    begin
-        x := a[i];
-        a[0] := x;
-        j := i - 1;
-        while x < a[j] do
-        begin
-            a[j + 1] := a[j];
-            j := j - 1;
-        end;
-        a[j + 1] := x;
-        write(i:2, ':');
-        write_array
-    end
-end;
-
 begin
     randomize;
     init_array(8, 99);
     present_array;
-    straight_insertion;
-    hline(N + 1)
+    hline(N + 1);
+    readln
 end.

@@ -1,4 +1,5 @@
 *
 !*.pas
+!*.sh
 !.gitignore
-!conv.sh
+!Makefile

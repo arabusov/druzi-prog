@@ -9,4 +9,5 @@ OUTPUT=${INPUT^^}
 echo '{ DOSBox configuration. Type before running TPX:' > $OUTPUT
 echo '      Z:\KEYB ru441 866' >> $OUTPUT
 echo '}' >> $OUTPUT
-iconv -f=utf-8 -t=CP866 $INPUT | unix2dos >> $OUTPUT
+iconv -f=utf-8 -t=CP866 $INPUT | \
+    sed 's/oglgraph/graph/' | sed 's/smallint/integer/' | unix2dos >> $OUTPUT

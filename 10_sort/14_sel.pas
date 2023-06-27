@@ -50,20 +50,6 @@ begin
     draw_element(j);
 end;
 
-{ Подпрограмма перестановки двух элементов массива "a"}
-procedure swapa(i, j: integer);
-var
-    x: integer;
-begin
-    draw_couple(i, j, red);
-    delay(100);
-    draw_couple(i, j, black);
-    x := a[i];
-    a[i] := a[j];
-    a[j] := x;
-    draw_couple(i, j, white)
-end;
-
 procedure straight_selection;
 var
     i, j, k: integer;

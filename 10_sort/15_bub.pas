@@ -56,11 +56,13 @@ var
     x: integer;
 begin
     draw_couple(i, j, red);
-    delay(100);
+    delay(400);
     draw_couple(i, j, black);
     x := a[i];
     a[i] := a[j];
     a[j] := x;
+    draw_couple(i, j, red);
+    delay(400);
     draw_couple(i, j, white)
 end;
 
@@ -71,14 +73,18 @@ var
 begin
     for i := 2 to N do
     begin
+        draw_couple(i - 1, i - 1, yellow);
         for j := N downto i do
         begin
-            draw_couple(i, j, yellow);
+            draw_couple(j - 1, j, green);
+            delay(400);
+            draw_couple(j - 1, j, white);
             if a[j - 1] > a[j] then
                 swapa(j - 1, j)
             else
                 draw_couple(i, j, white)
-        end
+        end;
+        draw_couple(i - 1, i - 1, white)
     end
 end;
 

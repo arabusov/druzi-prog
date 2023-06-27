@@ -86,7 +86,8 @@ begin
         begin
             draw_element(j, white);
             draw_element(j + 1, white)
-        end
+        end;
+        draw_element(1, white)
     end
 end;
 

@@ -1,4 +1,4 @@
-program insert_sort_study;
+program sel_sort_study;
 
 uses oglgraph;
 

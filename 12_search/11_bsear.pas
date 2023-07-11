@@ -4,34 +4,41 @@ uses oglgraph;
 
 { Наибольшее число элементов в массиве }
 const
-    nmax = 10180;
-    step = 128;
+    nmax = 14000;
+    step = 256;
 
 var 
     { Массив из целых чисел }
     a: array [1..nmax] of integer;
     { Переменная, которая будет следить за размером массива }
-    N, max_random: integer;
+    N: integer;
 
 { Подпрограмма, которая устанавливает начальные значения массива
-    в случайном порядке и фиксирует размер массива }
+    и фиксирует размер массива }
 procedure init_array(n_elements: integer; max_val: integer);
 var
     i: integer;
+    gen_step: integer;
 begin
     N := n_elements;
-    a[1] := random(max_val div 2) + 1;
+    if (N < 2) or (max_val < n_elements) then
+    begin
+        writeln('Number of elements must >= 2 and maximum value >= n elements');
+        exit
+    end;
+    gen_step := max_val div N;
+    if gen_step = 0 then
+        gen_step := 1;
+    a[1] := random(gen_step);
     for i := 2 to N do
-        if a[i - 1] < max_val then
+    begin
+        a[i] := a[i - 1] + random(gen_step);
+        if a[i] > max_val then
         begin
-            a[i] := (random((max_val - a[i - 1]) div 2)
-                    + 1 + a[i - 1]);
-            if a[i] >= max_val then
-                a[i] := max_val
-        end
-        else
-            a[i] := a[i - 1];
-    max_random := max_val
+            writeln('Internal error: a[',i,']>', max_val);
+            exit
+        end;
+    end
 end;
 
 var
@@ -75,7 +82,7 @@ begin
     { Запустим алгоритм для каждого элемента массива }
     for i := 1 to N do
     begin
-        k := binary_search(random(max_random));
+        k := binary_search(random(nmax));
         { Сохраняем статистику }
         av_comps := av_comps + n_comp;
     end;
@@ -177,13 +184,15 @@ end;
 
 var
     i: integer;
+    n_tests: integer;
 
 begin
     { Пусть каждый раз случайная последовательность будет новой }
     randomize;
     n_reports := 0;
-    write('Test: ');
-    for i := 0 to (nmax div step) - 1 do
+    n_tests := nmax div step;
+    write('#test (total ', n_tests, '): ');
+    for i := 0 to n_tests - 1 do
     begin
         size := i * step + 2;
         n_reports := n_reports + 1;

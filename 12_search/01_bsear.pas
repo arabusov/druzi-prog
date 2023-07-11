@@ -10,23 +10,32 @@ var
     N: integer;
 
 { Подпрограмма, которая устанавливает начальные значения массива
-    в случайном порядке и фиксирует размер массива }
+    и фиксирует размер массива }
+
 procedure init_array(n_elements: integer; max_val: integer);
 var
     i: integer;
+    gen_step: integer;
 begin
     N := n_elements;
-    a[1] := random(max_val div 2) + 1;
+    if (N < 2) or (max_val < n_elements) then
+    begin
+        writeln('Number of elements must >= 2 and maximum value >= n elements');
+        exit
+    end;
+    gen_step := max_val div N;
+    if gen_step = 0 then
+        gen_step := 1;
+    a[1] := random(gen_step);
     for i := 2 to N do
-        if a[i - 1] < max_val then
+    begin
+        a[i] := a[i - 1] + random(gen_step);
+        if a[i] > max_val then
         begin
-            a[i] := (random((max_val - a[i - 1]) div 2)
-                    + 1 + a[i - 1]);
-            if a[i] >= max_val then
-                a[i] := max_val
-        end
-        else
-            a[i] := a[i - 1];
+            writeln('Internal error: a[',i,']>', max_val);
+            exit
+        end;
+    end
 end;
 
 { Простая подпрограмма печати массива на экран, целая строчка тратится
@@ -112,7 +121,7 @@ begin
     { Пусть каждый раз случайная последовательность будет новой }
     randomize;
     { Создадим массив из 8 элементов, каждый из которых не больше 99 }
-    init_array(8, 99);
+    init_array(16, 99);
     { Выведем на экран оригинальный массив вместе с <<шапкой>> }
     present_array;
     { Подведём черту под табличкой }
